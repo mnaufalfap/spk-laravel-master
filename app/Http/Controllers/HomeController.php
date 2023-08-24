@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\m_nilai_smart;
+use App\Models\m_alternatif;
+use App\Models\m_kriteria;
+use App\Models\m_bobot;
+use App\Models\m_ranking;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

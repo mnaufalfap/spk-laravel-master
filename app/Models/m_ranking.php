@@ -14,16 +14,17 @@ class m_ranking extends Model
     public $table = 'm_rankings';
 
     protected $fillable = [
-    	'hasil_akhir',  'ranking', 'm_alternatif_id'
+        'hasil_akhir',  'ranking', 'm_alternatif_id'
     ];
 
     // relasi
-    public function Alternatif(){
+    public function Alternatif()
+    {
         return $this->belongsTo('App\Models\m_alternatif', 'm_alternatif_id');
     }
     public function allData()
     {
-        return m_ranking::with('Alternatif')->join('m_alternatifs', 'm_alternatifs.id', '=','m_rankings.m_alternatif_id')->where('m_alternatifs.user_id', Auth::user()->id)->get();
+        return m_ranking::with('Alternatif')->join('m_alternatifs', 'm_alternatifs.id', '=', 'm_rankings.m_alternatif_id')->where('m_alternatifs.user_id', Auth::user()->id)->get();
     }
     public function addData($data)
     {
@@ -32,7 +33,7 @@ class m_ranking extends Model
 
     public function sortDesc()
     {
-        return m_ranking::with('Alternatif')->join('m_alternatifs', 'm_alternatifs.id', '=','m_rankings.m_alternatif_id')->where('m_alternatifs.user_id', Auth::user()->id)->orderby('hasil_akhir', 'desc')->get();
+        return m_ranking::with('Alternatif')->join('m_alternatifs', 'm_alternatifs.id', '=', 'm_rankings.m_alternatif_id')->where('m_alternatifs.user_id', Auth::user()->id)->orderby('hasil_akhir', 'desc')->get();
     }
 
     public function cekData($id)
@@ -42,5 +43,10 @@ class m_ranking extends Model
     public function updateData($data, $id)
     {
         m_ranking::with('Alternatif')->where('m_alternatif_id', $id)->update($data);
+    }
+
+    public function rank()
+    {
+        return m_ranking::with('Alternatif')->join('m_alternatifs', 'm_alternatifs.id', '=', 'm_rankings.m_alternatif_id')->where('m_alternatifs.user_id', '=', '3')->orderby('hasil_akhir', 'desc')->get();
     }
 }
